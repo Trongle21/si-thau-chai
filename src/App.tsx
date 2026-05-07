@@ -72,7 +72,7 @@ function App() {
           seconds: Math.floor((distance % (1000 * 60)) / 1000),
         });
       }
-    }, 3000);
+    }, 1000);
 
     return () => clearInterval(timer);
   }, []);
@@ -80,7 +80,7 @@ function App() {
   useEffect(() => {
     const slideTimer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % SI_THAU_CHAI_IMAGES.length);
-    }, 4000);
+    }, 6000);
     return () => clearInterval(slideTimer);
   }, []);
 
