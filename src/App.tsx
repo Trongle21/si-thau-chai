@@ -163,7 +163,9 @@ function App() {
 
       <section className="gallery-section">
         <div className="section-header">
-          <h2 className="section-title">Siêu mê</h2>
+          <h2 className="section-title" style={{ color: "#fff" }}>
+            Siêu mê
+          </h2>
         </div>
 
         <div className="carousel">
