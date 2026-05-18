@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-import HeartCanvas, { Guestbook, SI_THAU_CHAI_IMAGES } from "./components/HeartCanvas";
+import HeartCanvas, {
+  Guestbook,
+  SI_THAU_CHAI_IMAGES,
+} from "./components/HeartCanvas";
 
 interface TimeLeft {
   days: number;
@@ -9,8 +12,8 @@ interface TimeLeft {
   seconds: number;
 }
 
-// const DESTINATION_DATE = new Date("2026-05-23T00:00:00").getTime();
-const DESTINATION_DATE = Date.now() + 1000 * 2 * 1;
+const DESTINATION_DATE = new Date("2026-05-23T00:00:00").getTime();
+// const DESTINATION_DATE = Date.now() + 1000 * 2 * 1;
 
 function App() {
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({
@@ -72,7 +75,10 @@ function App() {
       {showHeartCanvas ? (
         <>
           <HeartCanvas onHeartClick={() => setShowGuestbook(true)} />
-          <Guestbook isOpen={showGuestbook} onClose={() => setShowGuestbook(false)} />
+          <Guestbook
+            isOpen={showGuestbook}
+            onClose={() => setShowGuestbook(false)}
+          />
         </>
       ) : (
         <div className="app">
