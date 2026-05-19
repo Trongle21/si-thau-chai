@@ -1,59 +1,75 @@
-import { useEffect, useRef, useState, useCallback } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import { useHeartAnimation } from "../hooks/useHeartAnimation";
 import "./HeartCanvas.css";
 
-const SI_THAU_CHAI_IMAGES = [
+export interface ImageItem {
+  url: string;
+  alt: string;
+  caption: string;
+  message: string;
+}
+
+interface GuestbookProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+interface HeartCanvasProps {
+  onHeartClick?: () => void;
+}
+
+const SI_THAU_CHAI_IMAGES: ImageItem[] = [
   {
-    url: "https://ik.imagekit.io/tvlk/blog/2024/01/go-and-share-ban-si-thau-chai-lai-chau-2-1024x768.webp?tr=q-70,c-at_max,w-1000,h-600",
+    url: "/1.jpg",
     alt: "Núi rừng Tây Bắc hùng vĩ",
     caption: "Chỉ",
     message: "",
   },
   {
-    url: "https://file.smiletrip.vn/posts/vi-vn/2025/01/16/1174/si-thau-chai-lai-chau-7.jpg",
+    url: "/2.jpg",
     alt: "Săn mây cùng em nha",
     caption: "Muốn",
     message: "",
   },
   {
-    url: "https://mia.vn/media/uploads/blog-du-lich/si-thau-chai-3-1731866463.jpg",
+    url: "/3.jpg",
     alt: "Thác nước hùng vĩ",
     caption: "Nói",
     message: "",
   },
   {
-    url: "https://i.ex-cdn.com/vntravellive.com/files/news/2024/10/14/giua-may-ngan-tim-ve-chon-binh-yen-si-thau-chai-121237.jpg",
+    url: "/4.jpg",
     alt: "Biển mây trên núi",
     caption: "Với",
     message: "",
   },
   {
-    url: "https://cdn.tcdulichtphcm.vn/upload/4-2024/images/2024-10-26/464000832_2942105865966250_5875548646956490935_n-1729918786-649-width1280height960.jpg",
+    url: "/5.jpg",
     alt: "Homestay xinh xắn",
     caption: "Cả",
     message: "",
   },
   {
-    url: "https://img.thuonghieusanpham.vn/img/TAPCHI_THSP/news_dataimages/nguyenmai/112021/30/10/in_article/5836_2.png?rt=20211130105837",
+    url: "/6.jpg",
     alt: "Đặc sản Tây Bắc",
     caption: "Thế",
     message: "",
   },
   {
-    url: "https://mia.vn/media/uploads/blog-du-lich/si-thau-chai-1-1731866463.jpg",
+    url: "/7.jpg",
     alt: "Cánh đồng lúa",
     caption: "Giới",
     message: "",
   },
   {
-    url: "https://mia.vn/media/uploads/blog-du-lich/si-thau-chai-1-1731866463.jpg",
+    url: "/8.jpg",
     alt: "Cánh đồng lúa",
     caption: "I love you so much!",
     message: "",
   },
 ];
 
-const Guestbook = ({ isOpen, onClose }) => {
+const Guestbook: React.FC<GuestbookProps> = ({ isOpen, onClose }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const totalPages = SI_THAU_CHAI_IMAGES.length;
 
@@ -68,7 +84,7 @@ const Guestbook = ({ isOpen, onClose }) => {
   useEffect(() => {
     if (!isOpen) return;
 
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "ArrowRight") goNext();
       if (e.key === "ArrowLeft") goPrev();
       if (e.key === "Escape") onClose();
@@ -166,7 +182,7 @@ const Guestbook = ({ isOpen, onClose }) => {
   );
 };
 
-const HeartCanvas = ({ onHeartClick }) => {
+const HeartCanvas: React.FC<HeartCanvasProps> = ({ onHeartClick }) => {
   const { canvasRef, initAnimation } = useHeartAnimation();
   const [isFormed, setIsFormed] = useState(false);
   const isFormedRef = useRef(false);
@@ -206,9 +222,10 @@ const HeartCanvas = ({ onHeartClick }) => {
       cleanup?.();
       clearInterval(checkFormation);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initAnimation]);
 
-  const handleClick = (e) => {
+  const handleClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
     if (!isFormed) return;
 
     const canvas = canvasRef.current;
@@ -228,7 +245,11 @@ const HeartCanvas = ({ onHeartClick }) => {
 
   return (
     <div className="heart-canvas-wrapper">
-      <canvas ref={canvasRef} className="heart-canvas" onClick={handleClick} />
+      <canvas
+        ref={canvasRef}
+        className="heart-canvas"
+        onClick={handleClick as React.MouseEventHandler<HTMLCanvasElement>}
+      />
       {/* {isFormed && (
         <div className="heart-click-hint">
           <span className="pulse-heart">💖</span>

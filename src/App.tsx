@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import HeartCanvas, {
   Guestbook,
@@ -11,6 +11,44 @@ interface TimeLeft {
   minutes: number;
   seconds: number;
 }
+
+const SI_THAU_CHAI_IMAGES_2 = [
+  {
+    url: "https://ik.imagekit.io/tvlk/blog/2024/01/go-and-share-ban-si-thau-chai-lai-chau-2-1024x768.webp?tr=q-70,c-at_max,w-1000,h-600",
+    alt: "Núi rừng Tây Bắc hùng vĩ",
+    caption: "Welcome to the SI THAU CHAI",
+  },
+  {
+    url: "https://file.smiletrip.vn/posts/vi-vn/2025/01/16/1174/si-thau-chai-lai-chau-7.jpg",
+    alt: "Săn mây cùng em nha",
+    caption: "Săn mây cùng em nha",
+  },
+  {
+    url: "https://mia.vn/media/uploads/blog-du-lich/si-thau-chai-3-1731866463.jpg",
+    alt: "Sông nước và thung lũng xanh",
+    caption: "I wish see the waterfall with my love ahahahaa",
+  },
+  {
+    url: "https://i.ex-cdn.com/vntravellive.com/files/news/2024/10/14/giua-may-ngan-tim-ve-chon-binh-yen-si-thau-chai-121237.jpg",
+    alt: "Biển mây trên núi",
+    caption: "Sooo Chill",
+  },
+  {
+    url: "https://cdn.tcdulichtphcm.vn/upload/4-2024/images/2024-10-26/464000832_2942105865966250_5875548646956490935_n-1729918786-649-width1280height960.jpg",
+    alt: "Rừng cây xanh tươi",
+    caption: "Ảnh homestay của chúng ta nè",
+  },
+  {
+    url: "https://img.thuonghieusanpham.vn/img/TAPCHI_THSP/news_dataimages/nguyenmai/112021/30/10/in_article/5836_2.png?rt=20211130105837",
+    alt: "Rừng cây xanh tươi",
+    caption: "Foodddddd",
+  },
+  {
+    url: "https://mia.vn/media/uploads/blog-du-lich/si-thau-chai-1-1731866463.jpg",
+    alt: "Rừng cây xanh tươi",
+    caption: "Mong chờ cho cuộc đi chơi với em sắp tới ahahaha",
+  },
+];
 
 const DESTINATION_DATE = new Date("2026-05-23T00:00:00").getTime();
 // const DESTINATION_DATE = Date.now() + 1000 * 2 * 1;
@@ -26,6 +64,8 @@ function App() {
   const [isCountdownFinished, setIsCountdownFinished] = useState(false);
   const [showHeartCanvas, setShowHeartCanvas] = useState(false);
   const [showGuestbook, setShowGuestbook] = useState(false);
+  const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -124,6 +164,47 @@ function App() {
                 </div>
               </div>
 
+              {!isCountdownFinished && !showHeartCanvas && (
+                <div className="password-section">
+                  <input
+                    type="password"
+                    className="password-input"
+                    placeholder="Nhập mật khẩu..."
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                      setPasswordError(false);
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        if (password === "160201moa") {
+                          setShowHeartCanvas(true);
+                        } else {
+                          setPasswordError(true);
+                        }
+                      }
+                    }}
+                  />
+                  <button
+                    className="heart-button"
+                    onClick={() => {
+                      if (password === "160201moa") {
+                        setShowHeartCanvas(true);
+                      } else {
+                        setPasswordError(true);
+                      }
+                    }}
+                  >
+                    Mở trái tim 💖
+                  </button>
+                  {passwordError && (
+                    <p className="password-error">
+                      Sai mật khẩu rồi nha! Thử lại đi 💔
+                    </p>
+                  )}
+                </div>
+              )}
+
               {isCountdownFinished && !showHeartCanvas && (
                 <button
                   className="heart-button"
@@ -131,32 +212,6 @@ function App() {
                 >
                   Mở trái tim 💖
                 </button>
-              )}
-
-              {!isCountdownFinished && (
-                <div className="date-badge">
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <rect
-                      x="3"
-                      y="4"
-                      width="18"
-                      height="18"
-                      rx="2"
-                      ry="2"
-                    ></rect>
-                    <line x1="16" y1="2" x2="16" y2="6"></line>
-                    <line x1="8" y1="2" x2="8" y2="6"></line>
-                    <line x1="3" y1="10" x2="21" y2="10"></line>
-                  </svg>
-                  <span>23 tháng 5 năm 2026</span>
-                </div>
               )}
             </div>
           </header>
@@ -173,7 +228,7 @@ function App() {
                 className="carousel-track"
                 style={{ transform: `translateX(-${currentSlide * 100}%)` }}
               >
-                {SI_THAU_CHAI_IMAGES.map((image, index) => (
+                {SI_THAU_CHAI_IMAGES_2.map((image, index) => (
                   <div className="carousel-slide" key={index}>
                     <img
                       src={image.url}
@@ -219,7 +274,7 @@ function App() {
               </button>
 
               <div className="carousel-dots">
-                {SI_THAU_CHAI_IMAGES.map((_, index) => (
+                {SI_THAU_CHAI_IMAGES_2.map((_, index) => (
                   <button
                     key={index}
                     className={`carousel-dot ${index === currentSlide ? "active" : ""}`}
@@ -231,7 +286,7 @@ function App() {
             </div>
 
             <div className="thumbnails">
-              {SI_THAU_CHAI_IMAGES.map((image, index) => (
+              {SI_THAU_CHAI_IMAGES_2.map((image, index) => (
                 <div
                   key={index}
                   className={`thumbnail ${index === currentSlide ? "active" : ""}`}

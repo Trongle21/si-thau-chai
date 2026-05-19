@@ -122,8 +122,7 @@ export const useHeartAnimation = () => {
       const n = -Math.cos(time);
       pulse((1 + n) * 0.5, (1 + n) * 0.5);
 
-      time +=
-        (Math.sin(time) < 0 ? 9 : n > 0.8 ? 0.2 : 1) * config.timeDelta;
+      time += (Math.sin(time) < 0 ? 9 : n > 0.8 ? 0.2 : 1) * config.timeDelta;
 
       ctx.fillStyle = "rgba(0,0,0,.1)";
       ctx.fillRect(0, 0, width, height);
