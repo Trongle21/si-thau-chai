@@ -50,7 +50,7 @@ const SI_THAU_CHAI_IMAGES_2 = [
   },
 ];
 
-const DESTINATION_DATE = new Date("2026-05-23T00:00:00").getTime();
+const DESTINATION_DATE = new Date("2026-05-22T17:00:00").getTime();
 // const DESTINATION_DATE = Date.now() + 1000 * 2 * 1;
 
 function App() {
