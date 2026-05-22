@@ -2,6 +2,9 @@ import React, { useEffect, useRef, useState, useCallback } from "react";
 import { useHeartAnimation } from "../hooks/useHeartAnimation";
 import "./HeartCanvas.css";
 
+const MUSIC_PATH =
+  "/music/Love is (Lofi Ver.) - Dangrangto x Freak D - (320 Kbps).mp3";
+
 export interface ImageItem {
   url: string;
   alt: string;
@@ -184,8 +187,27 @@ const Guestbook: React.FC<GuestbookProps> = ({ isOpen, onClose }) => {
 
 const HeartCanvas: React.FC<HeartCanvasProps> = ({ onHeartClick }) => {
   const { canvasRef, initAnimation } = useHeartAnimation();
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isFormed, setIsFormed] = useState(false);
   const isFormedRef = useRef(false);
+
+  useEffect(() => {
+    if (!audioRef.current) {
+      audioRef.current = new Audio(MUSIC_PATH);
+      audioRef.current.loop = true;
+      audioRef.current.volume = 0.3;
+    }
+    audioRef.current.play().catch(() => {
+      // Autoplay blocked, will be handled on user interaction
+    });
+
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+      }
+    };
+  }, []);
 
   useEffect(() => {
     if (isFormedRef.current) return;
